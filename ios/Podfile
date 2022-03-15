@@ -1,0 +1,20 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '11.0'
+use_frameworks!
+inhibit_all_warnings!
+
+target 'CameraRecognizer' do
+    config = use_native_modules!
+    use_react_native!(
+        :path => config[:reactNativePath],
+        :hermes_enabled => false
+    )
+
+    post_install do |installer|
+        react_native_post_install(installer)
+    end
+
+    pod 'TensorFlowLiteSwift', :subspecs => ['CoreML', 'Metal']
+end
